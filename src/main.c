@@ -8,13 +8,13 @@
  * Todos los derechos reservados. Licencia MIT.
  */
 
- /**
+/**
  * @mainpage Laboratorio 3 - Electrónica IV
  *
  * @section intro_sec Introducción
- * Este proyecto implementa un Tipo de Dato Abstracto (ADT) para gestionar 
+ * Este proyecto implementa un Tipo de Dato Abstracto (ADT) para gestionar
  * la información de un alumno y serializarla a formato JSON.
- * Se enfoca en el encapsulamiento de datos, donde la estructura interna 
+ * Se enfoca en el encapsulamiento de datos, donde la estructura interna
  * del alumno es privada y solo accesible a través de su interfaz pública.
  *
  * @section features_sec Características
@@ -33,8 +33,8 @@
 /**
  * @brief Función principal del programa.
  *
- * Coordina la creación de una instancia de alumno, solicita su 
- * serialización en formato JSON y muestra el resultado por la salida 
+ * Coordina la creación de una instancia de alumno, solicita su
+ * serialización en formato JSON y muestra el resultado por la salida
  * estándar.
  *
  * @return int Retorna 0 si la ejecución fue exitosa, o -1 si hubo errores.
@@ -45,11 +45,10 @@ int main(void) {
     alumno_t yo = AlumnoCrear("Diaz", "Gerardo Agustin", 40700105);
 
     /*Verifica que se creó correctamente*/
-if (yo == NULL)
-{
-    printf("Error: No se pudo asignar memoria para el alumno.\n");
-    return -1;
-}
+    if (yo == NULL) {
+        printf("Error: No se pudo asignar memoria para el alumno.\n");
+        return -1;
+    }
 
     /* 2. Preparar el buffer para la serialización */
     char buffer[256];

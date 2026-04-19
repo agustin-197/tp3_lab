@@ -16,7 +16,8 @@
 #include <stdlib.h> /*Libreria para malloc*/
 
 /**
- * @brief Macro para comprobar el espacio restante en el buffer y actualizar contadores.
+ * @brief Macro para comprobar el espacio restante en el buffer y actualizar
+ * contadores.
  *
  * Si la operación de escritura falló o el espacio no es suficiente, fuerza
  * a la función invocadora a retornar -1. Si tiene éxito, descuenta el
@@ -27,23 +28,25 @@
  * @param ptr Puntero a la posición actual dentro del buffer de caracteres.
  */
 
-#define GESTIONAR_ESPACIO(res, disp, ptr) do { \
-    if ((res) < 0 || (res) >= (disp)) return -1; \
-    (disp) -= (res); \
-    (ptr) += (res); \
-} while(0)
+#define GESTIONAR_ESPACIO(res, disp, ptr)                                      \
+    do {                                                                       \
+        if ((res) < 0 || (res) >= (disp))                                      \
+            return -1;                                                         \
+        (disp) -= (res);                                                       \
+        (ptr) += (res);                                                        \
+    } while (0)
 
 /**
  * @brief Estructura privada que contiene la información personal de un alumno.
  *
  * Al estar definida en el archivo .c, sus atributos quedan ocultos
- * para el resto del programa, cumpliendo con el patrón de Tipo de Dato Abstracto.
+ * para el resto del programa, cumpliendo con el patrón de Tipo de Dato
+ * Abstracto.
  */
 
-struct alumno_s
-{
-    char nombre[30]; /**< Nombre del alumno */
-    char apellido[30]; /**< Apellido del alumno */
+struct alumno_s {
+    char nombre[30];    /**< Nombre del alumno */
+    char apellido[30];  /**< Apellido del alumno */
     uint32_t documento; /**< Documento del alumno */
 };
 
@@ -59,7 +62,8 @@ struct alumno_s
  * @return int Cantidad de caracteres que se intentaron escribir.
  */
 
-static int SerializarTexto(const char *campo, const char *valor, char *cadena, int espacio) {
+static int SerializarTexto(const char *campo, const char *valor, char *cadena,
+                           int espacio) {
 
     return snprintf(cadena, espacio, "\"%s\":\"%s\"", campo, valor);
 }
@@ -88,20 +92,23 @@ static int SerializarNumero(const char *campo, int valor, char *cadena,
  * @param apellido Cadena de caracteres con el apellido del alumno.
  * @param nombre Cadena de caracteres con el nombre del alumno.
  * @param documento Número de documento del alumno.
- * @return alumno_t Puntero a la estructura asignada, o NULL si falló la asignación.
+ * @return alumno_t Puntero a la estructura asignada, o NULL si falló la
+ * asignación.
  */
 
-alumno_t AlumnoCrear(const char *apellido, const char *nombre, uint32_t documento){
+alumno_t AlumnoCrear(const char *apellido, const char *nombre,
+                     uint32_t documento) {
     /*Reservar memoria dinamicamente para la estructura*/
     alumno_t nuevo_alumno = malloc(sizeof(struct alumno_s));
 
-    if (nuevo_alumno != NULL){
+    if (nuevo_alumno != NULL) {
 
-        strncpy(nuevo_alumno->apellido, apellido, sizeof(nuevo_alumno->apellido)-1);
-        nuevo_alumno->apellido[sizeof(nuevo_alumno->apellido)-1] = '\0';
+        strncpy(nuevo_alumno->apellido, apellido,
+                sizeof(nuevo_alumno->apellido) - 1);
+        nuevo_alumno->apellido[sizeof(nuevo_alumno->apellido) - 1] = '\0';
 
-        strncpy(nuevo_alumno->nombre, nombre, sizeof(nuevo_alumno->nombre)-1);
-        nuevo_alumno->nombre[sizeof(nuevo_alumno->nombre)-1] = '\0';
+        strncpy(nuevo_alumno->nombre, nombre, sizeof(nuevo_alumno->nombre) - 1);
+        nuevo_alumno->nombre[sizeof(nuevo_alumno->nombre) - 1] = '\0';
 
         nuevo_alumno->documento = documento;
     }
@@ -119,7 +126,8 @@ alumno_t AlumnoCrear(const char *apellido, const char *nombre, uint32_t document
  * @param alumno Puntero a la estructura opaca con los datos del alumno.
  * @param cadena Puntero al buffer donde se almacenará el JSON resultante.
  * @param espacio Capacidad total del buffer en bytes.
- * @return int Longitud total de la cadena generada, o -1 si el espacio es insuficiente.
+ * @return int Longitud total de la cadena generada, o -1 si el espacio es
+ * insuficiente.
  */
 
 int AlumnoSerializar(alumno_t alumno, char *cadena, int espacio) {
